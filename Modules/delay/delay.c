@@ -1,9 +1,8 @@
 
 #include "delay.h"
-#include "stm32f10x_tim.h"
-#include "stm32f10x_rcc.h"
-#include "misc.h"
-
+#include "main.h"
+#include "lcd16x2.h"
+ 
 
 void TIM2_CONFIG(){
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
@@ -26,7 +25,7 @@ void TIM2_CONFIG(){
 	NVIC_Init(&NVIC_InitStruct); 
 */	 
 	TIM_Cmd(TIM2, ENABLE);
- 
+	sysTickInit();
 }
 void DelayUs(uint32_t t){
 	TIM2->CNT=0;
@@ -40,5 +39,31 @@ void DelayMs(uint32_t t){
 	DelayUs(1000);
 	}
 } 
+void DelayMin(uint32_t min){
+	while(min){
+	DelayMs(1000*60);
+	min--;
+	}
+	
+}
+void sysTickInit(void) {
+  SysTick_Config(SystemCoreClock/1000);
+}
+void SysTick_Handler(void) {
+    millis_counter++;
+static uint32_t prev_check = 0;
+    if (millis_counter - prev_check >= 1000) {
+        prev_check = millis_counter;
+        check_active_time();
+    }
+}
+uint32_t  millis(void){
+		return millis_counter;
+}
+void check_active_time(void){
+	uint32_t time;
+	time=millis();
+	if(time-last_activity_time>time_to_off_lcd)LCD_Backlight_OFF();
+	else LCD_Backlight_ON();
+}
 
- 

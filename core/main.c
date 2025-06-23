@@ -8,68 +8,31 @@
 #include "string.h"
 #include "flash_data.h"
 
-
-void My_GPIO_Init(void);
-
-
-static bool flag_change_data_uid = false;
- uint8_t index_uidcard=0;
 uint8_t  array_uid_card[MAX_CARDS][5];
+uint8_t  index_uidcard=0;
+bool flag_change_data_uid = false;
+char pin_number[MAX_LENG_PINNUMBER]; 
+int failed_attempts=0;
+uint8_t UID_MASTER_CARD[5];
+char mater_pin_number[MAX_LENG_PINNUMBER]="0000";
+bool flag_unlock_door =false;
+bool flag_save = false;
+volatile uint32_t millis_counter = 0;
+uint32_t last_activity_time = 0;
+bool mode_dual=false;
+const uint32_t timeout_inactivity = 60000; // 60 giây
+
+
+
+
+void My_GPIO_Init(void); 
 uint8_t CardID[5];
-char szBuff[100];
-const master_card[5];
+ 
+ 
 
+ 
 
-bool is_uid_exit(uint8_t array_uid_card[MAX_CARDS][5],uint8_t CardID[5]){
-	for(uint8_t i=0;i<index_uidcard;i++){
-		  bool matched = true;
-        for (uint8_t j = 0; j < 5; j++) {
-            if (array_uid_card[i][j] != CardID[j]) {
-                matched = false;
-                break;
-            }
-					}
-				if(matched==true) return true;
-}
-	return false ;
-}
-
-void add_new_uid_card(uint8_t array_uid_card[MAX_CARDS][5],uint8_t CardID[5]){
-		for (uint8_t j = 0; j < 5; j++) {
-			array_uid_card[index_uidcard][j] = CardID[j];
-	  }
-		index_uidcard++;
-		flag_change_data_uid= true;
-
-}
-
-/* xoa va day cac gia tri tiep theo len */
-void delete_uid_card(uint8_t array_uid_card[MAX_CARDS][5],uint8_t CardID[5]){
-		uint8_t i;
-		 for(i=0;i<index_uidcard;i++){
-		  bool matched = true;
-        for (uint8_t j = 0; j < 5; j++) {
-            if (array_uid_card[i][j] != CardID[j]) {
-                matched = false;
-                break;
-            }
-					}
-			if(matched==true) {
-			for(uint8_t k=i;k<index_uidcard;k++){
-				 for (uint8_t j = 0; j < 5; j++) {
-             array_uid_card[k][j] = array_uid_card[k+1][j];
-				 }
-			}
-			for (uint8_t j = 0; j < 5; j++) {
-             array_uid_card[index_uidcard-1][j] = 0xFF;
-				 }
-			index_uidcard--;
-			flag_change_data_uid =true;
-			break;
-			}
-
-}
-}
+ 
 typedef	struct
   {
 		
@@ -150,7 +113,7 @@ int main() {
 	 
  if (TM_MFRC522_Check(CardID) == MI_OK) {
 	
- 	if(is_uid_exit(array_uid_card,CardID)==true){
+ 	if(is_uid_exit(CardID)==true){
  		 
 	 GPIO_SetBits(GPIOC, GPIO_Pin_13);
  		DelayMs(2000);
@@ -158,7 +121,7 @@ int main() {
 		
  	}
  	else  {
- 		add_new_uid_card(array_uid_card,CardID); 
+ 		add_new_uid_card(CardID); 
  	}
  	}
  	

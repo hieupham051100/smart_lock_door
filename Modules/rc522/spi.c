@@ -4,10 +4,10 @@
 uint8_t TM_SPI_Send(uint8_t data)
 {
 	
-	SPI_I2S_SendData(SPI2, data);
-	while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_BSY) == SET) {
+	SPI_I2S_SendData(SPI1, data);
+	while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_BSY) == SET) {
 	}
-	return SPI_I2S_ReceiveData(SPI2);
+	return SPI_I2S_ReceiveData(SPI1);
 }
 
 void TM_SPI_Init(void)
@@ -15,17 +15,17 @@ void TM_SPI_Init(void)
 	GPIO_InitTypeDef gpioInit;
 	SPI_InitTypeDef   SPI_InitStructure;
 	
-	RCC_APB1PeriphClockCmd (RCC_APB1Periph_SPI2, ENABLE);
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+ 
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_SPI1, ENABLE);
 	
 	gpioInit.GPIO_Mode=GPIO_Mode_AF_PP;
 	gpioInit.GPIO_Speed=GPIO_Speed_50MHz;
-	gpioInit.GPIO_Pin=GPIO_Pin_13 | GPIO_Pin_15;
-	GPIO_Init(GPIOB, &gpioInit);
+	gpioInit.GPIO_Pin=GPIO_Pin_7 | GPIO_Pin_5;
+	GPIO_Init(GPIOA, &gpioInit);
 	
 	gpioInit.GPIO_Mode=GPIO_Mode_IN_FLOATING;
 	gpioInit.GPIO_Speed=GPIO_Speed_50MHz;
-	gpioInit.GPIO_Pin=GPIO_Pin_14;
+	gpioInit.GPIO_Pin=GPIO_Pin_6;
 	GPIO_Init(GPIOB, &gpioInit);
 	
 	SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
@@ -37,19 +37,19 @@ void TM_SPI_Init(void)
 	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_16;
 	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
 	SPI_InitStructure.SPI_CRCPolynomial = 7;
-	SPI_Init(SPI2, &SPI_InitStructure);
+	SPI_Init(SPI1, &SPI_InitStructure);
 	
-	SPI_Cmd(SPI2, ENABLE);
+	SPI_Cmd(SPI1, ENABLE);
 }
 
 void TM_MFRC522_InitPins(void)
 {
 	GPIO_InitTypeDef gpioInit;
 	
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 	gpioInit.GPIO_Mode=GPIO_Mode_Out_PP;
 	gpioInit.GPIO_Speed=GPIO_Speed_50MHz;
-	gpioInit.GPIO_Pin=GPIO_Pin_12;
-	GPIO_Init(GPIOB, &gpioInit);
+	gpioInit.GPIO_Pin=GPIO_Pin_4;
+	GPIO_Init(GPIOA, &gpioInit);
 	MFRC522_CS_HIGH;
 }

@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\drivers\inc;.\drivers\src;.\delay</IncludePath>
+              <IncludePath>.\drivers\inc;.\drivers\src;.\core;.\Modules\delay;.\Modules\flash_data;.\Modules\lcd_16x2;.\Modules\Menu_level;.\Modules\rc522;.\Modules\key_pad_matrix</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -384,49 +384,14 @@
           <GroupName>core</GroupName>
           <Files>
             <File>
-              <FileName>mfrc522.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\mfrc522.c</FilePath>
-            </File>
-            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\main.c</FilePath>
+              <FilePath>.\core\main.c</FilePath>
             </File>
-            <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>flash_data.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\flash_data.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>header</GroupName>
-          <Files>
             <File>
               <FileName>main.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\main.h</FilePath>
-            </File>
-            <File>
-              <FileName>spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\spi.h</FilePath>
-            </File>
-            <File>
-              <FileName>mfrc522.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\mfrc522.h</FilePath>
-            </File>
-            <File>
-              <FileName>flash_data.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\flash_data.h</FilePath>
+              <FilePath>.\core\main.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -531,12 +496,107 @@
             <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\delay\delay.c</FilePath>
+              <FilePath>.\Modules\delay\delay.c</FilePath>
             </File>
             <File>
               <FileName>delay.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\delay\delay.h</FilePath>
+              <FilePath>.\Modules\delay\delay.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>rc522</GroupName>
+          <Files>
+            <File>
+              <FileName>mfrc522.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Modules\rc522\mfrc522.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Modules\rc522\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>mfrc522.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Modules\rc522\mfrc522.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Modules\rc522\spi.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash_data</GroupName>
+          <Files>
+            <File>
+              <FileName>flash_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Modules\flash_data\flash_data.c</FilePath>
+            </File>
+            <File>
+              <FileName>flash_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Modules\flash_data\flash_data.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lcd</GroupName>
+          <Files>
+            <File>
+              <FileName>lcd16x2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Modules\lcd_16x2\lcd16x2.c</FilePath>
+            </File>
+            <File>
+              <FileName>lcd16x2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Modules\lcd_16x2\lcd16x2.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>menu_lcd</GroupName>
+          <Files>
+            <File>
+              <FileName>menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Modules\Menu_level\menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>menu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Modules\Menu_level\menu.h</FilePath>
+            </File>
+            <File>
+              <FileName>button_menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Modules\Menu_level\button_menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>button_menu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Modules\Menu_level\button_menu.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>matrix4x4</GroupName>
+          <Files>
+            <File>
+              <FileName>matrix.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Modules\key_pad_matrix\matrix.c</FilePath>
+            </File>
+            <File>
+              <FileName>matrix.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Modules\key_pad_matrix\matrix.h</FilePath>
             </File>
           </Files>
         </Group>

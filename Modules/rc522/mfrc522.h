@@ -1,8 +1,9 @@
 #ifndef TM_MFRC522_H
 #define TM_MFRC522_H
 
+ 
 #include "stm32f10x.h"
-
+#include "stdbool.h"
 /**
  * Status enumeration
  *
@@ -168,6 +169,10 @@ extern TM_MFRC522_Status_t TM_MFRC522_Auth(uint8_t authMode, uint8_t BlockAddr, 
 extern TM_MFRC522_Status_t TM_MFRC522_Read(uint8_t blockAddr, uint8_t* recvData);
 extern TM_MFRC522_Status_t TM_MFRC522_Write(uint8_t blockAddr, uint8_t* writeData);
 extern void TM_MFRC522_Halt(void);
-
+bool is_uid_exit(uint8_t CardID[5]);
+void add_new_uid_card(uint8_t CardID[5]);
+void delete_uid_card(uint8_t CardID[5]);
+bool is_master_card(uint8_t CardID[5]);
+bool is_uid_same(uint8_t CardID1[5],uint8_t CardID2[5]);
 #endif
 

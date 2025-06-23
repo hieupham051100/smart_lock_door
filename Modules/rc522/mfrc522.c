@@ -374,3 +374,69 @@ void TM_MFRC522_Halt(void) {
 	TM_MFRC522_ToCard(PCD_TRANSCEIVE, buff, 4, buff, &unLen);
 }
 
+
+bool is_uid_exit(uint8_t CardID[5]){
+	for(uint8_t i=0;i<index_uidcard;i++){
+		  bool matched = true;
+        for (uint8_t j = 0; j < 5; j++) {
+            if (array_uid_card[i][j] != CardID[j]) {
+                matched = false;
+                break;
+            }
+					}
+				if(matched==true) return true;
+}
+	return false ;
+}
+void add_new_uid_card(uint8_t CardID[5]){
+		for (uint8_t j = 0; j < 5; j++) {
+			array_uid_card[index_uidcard][j] = CardID[j];
+	  }
+		index_uidcard++;
+		flag_change_data_uid= true;
+
+}
+void delete_uid_card(uint8_t CardID[5]){
+		uint8_t i;
+		 for(i=0;i<index_uidcard;i++){
+		  bool matched = true;
+        for (uint8_t j = 0; j < 5; j++) {
+            if (array_uid_card[i][j] != CardID[j]) {
+                matched = false;
+                break;
+            }
+					}
+			if(matched==true) {
+			for(uint8_t k=i;k<index_uidcard;k++){
+				 for (uint8_t j = 0; j < 5; j++) {
+             array_uid_card[k][j] = array_uid_card[k+1][j];
+				 }
+			}
+			for (uint8_t j = 0; j < 5; j++) {
+             array_uid_card[index_uidcard-1][j] = 0xFF;
+				 }
+			index_uidcard--;
+			flag_change_data_uid =true;
+			break;
+			}
+
+}
+}
+
+bool is_master_card(uint8_t CardID[5]) {
+    for (uint8_t i = 0; i < 5; i++) {
+        if (UID_MASTER_CARD[i] != CardID[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool is_uid_same(uint8_t CardID1[5],uint8_t CardID2[5]){
+			  for (uint8_t i = 0; i < 5; i++) {
+        if (CardID1[i] != CardID2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
